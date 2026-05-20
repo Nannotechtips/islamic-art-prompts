@@ -7,429 +7,158 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8f7f4; color: #2d2d2d; line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f8f7f4;
-            color: #2d2d2d;
-            line-height: 1.6;
-        }
+        /* Top Tabs */
+        .top-tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .top-tab { padding: 0.75rem 1.5rem; border: 1px solid #e0ddd8; border-bottom: none; background: #fff; cursor: pointer; font-size: 0.9rem; font-weight: 500; color: #666; border-radius: 8px 8px 0 0; transition: all 0.2s; }
+        .top-tab.active { background: #f8f7f4; color: #2d5a3a; font-weight: 600; border-color: #2d5a3a; border-bottom: 2px solid #f8f7f4; margin-bottom: -1px; }
+        .top-tab:hover:not(.active) { background: #fafaf8; }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
+        /* Category Tabs */
+        .category-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .cat-tab { padding: 0.6rem 1.1rem; border: 1px solid #e0ddd8; border-radius: 20px; background: #fff; cursor: pointer; font-size: 0.85rem; color: #666; transition: all 0.2s; white-space: nowrap; }
+        .cat-tab.active { border-color: #2d5a3a; background: #e8f0e8; color: #2d5a3a; font-weight: 600; }
+        .cat-tab:hover:not(.active) { border-color: #aaa; }
 
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 2.5rem;
-            border-bottom: 1px solid #e0ddd8;
-        }
+        /* Section Labels */
+        .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 0.75rem; }
 
-        .tab {
-            padding: 0.75rem 1.5rem;
-            border: 1px solid #e0ddd8;
-            border-bottom: none;
-            background: #fff;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #666;
-            border-radius: 8px 8px 0 0;
-            transition: all 0.2s;
-        }
+        /* Card Grid */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .card { border: 2px solid #e8e5e0; border-radius: 10px; padding: 1.25rem; cursor: pointer; transition: all 0.2s; background: #fff; }
+        .card:hover { border-color: #b8c9b8; background: #fcfcfa; }
+        .card.selected { border-color: #2d5a3a; background: #f0f5f0; }
+        .card .arabic { font-family: 'Amiri', serif; font-size: 1.4rem; text-align: right; direction: rtl; color: #1a1a1a; margin-bottom: 0.5rem; line-height: 1.8; }
+        .card .title-text { font-size: 0.95rem; font-weight: 600; color: #333; margin-bottom: 0.3rem; }
+        .card .subtitle { font-size: 0.85rem; color: #666; font-style: italic; }
+        .card .reference { font-size: 0.78rem; color: #999; margin-top: 0.25rem; }
 
-        .tab.active {
-            background: #f8f7f4;
-            color: #2d5a3a;
-            font-weight: 600;
-            border-color: #2d5a3a;
-            border-bottom: 2px solid #f8f7f4;
-            margin-bottom: -1px;
-        }
+        /* Custom add */
+        .custom-toggle { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; border: 1px dashed #ccc; border-radius: 8px; cursor: pointer; color: #666; font-size: 0.9rem; margin-bottom: 2rem; transition: all 0.2s; }
+        .custom-toggle:hover { border-color: #2d5a3a; color: #2d5a3a; }
+        .custom-form { display: none; padding: 1rem; border: 1px solid #e0ddd8; border-radius: 8px; margin-bottom: 2rem; background: #fff; }
+        .custom-form.visible { display: block; }
+        .custom-form input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem; margin-bottom: 0.75rem; }
+        .custom-form input:focus { outline: none; border-color: #2d5a3a; }
+        .custom-form .arabic-input { font-family: 'Amiri', serif; font-size: 1.2rem; direction: rtl; text-align: right; }
 
-        .tab:hover:not(.active) { background: #fafaf8; }
-
-        /* Sections */
-        .section-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #888;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Verse Grid */
-        .verse-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .verse-card {
-            border: 2px solid #e8e5e0;
-            border-radius: 10px;
-            padding: 1.25rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: #fff;
-        }
-
-        .verse-card:hover {
-            border-color: #b8c9b8;
-            background: #fcfcfa;
-        }
-
-        .verse-card.selected {
-            border-color: #2d5a3a;
-            background: #f0f5f0;
-        }
-
-        .verse-card .arabic {
-            font-family: 'Amiri', serif;
-            font-size: 1.4rem;
-            text-align: right;
-            direction: rtl;
-            color: #1a1a1a;
-            margin-bottom: 0.5rem;
-            line-height: 1.8;
-        }
-
-        .verse-card .translation {
-            font-size: 0.85rem;
-            color: #666;
-            font-style: italic;
-        }
-
-        .verse-card .reference {
-            font-size: 0.78rem;
-            color: #999;
-            margin-top: 0.25rem;
-        }
-
-        /* Custom verse */
-        .custom-verse-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            border: 1px dashed #ccc;
-            border-radius: 8px;
-            cursor: pointer;
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            transition: all 0.2s;
-        }
-
-        .custom-verse-toggle:hover { border-color: #2d5a3a; color: #2d5a3a; }
-
-        .custom-verse-form {
-            display: none;
-            padding: 1rem;
-            border: 1px solid #e0ddd8;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            background: #fff;
-        }
-
-        .custom-verse-form.visible { display: block; }
-
-        .custom-verse-form input {
-            width: 100%;
-            padding: 0.6rem 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .custom-verse-form input:focus {
-            outline: none;
-            border-color: #2d5a3a;
-        }
-
-        .custom-verse-form .arabic-input {
-            font-family: 'Amiri', serif;
-            font-size: 1.2rem;
-            direction: rtl;
-            text-align: right;
-        }
-
-        /* Customize Style Section */
-        .style-section {
-            border-top: 1px solid #e8e5e0;
-            padding-top: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .style-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .style-field label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #888;
-            margin-bottom: 0.4rem;
-        }
-
-        .style-field select {
-            width: 100%;
-            padding: 0.65rem 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            background: #fff;
-            color: #333;
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-        }
-
-        .style-field select:focus {
-            outline: none;
-            border-color: #2d5a3a;
-        }
+        /* Style Section */
+        .style-section { border-top: 1px solid #e8e5e0; padding-top: 2rem; margin-bottom: 2rem; }
+        .style-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
+        .style-field label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 0.4rem; }
+        .style-field select { width: 100%; padding: 0.65rem 0.75rem; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem; background: #fff; color: #333; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; }
+        .style-field select:focus { outline: none; border-color: #2d5a3a; }
 
         /* Translation Toggle */
-        .translation-section {
-            margin-bottom: 2rem;
-        }
-
-        .toggle-group {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .toggle-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            background: #fff;
-            cursor: pointer;
-            font-size: 0.85rem;
-            color: #666;
-            transition: all 0.2s;
-        }
-
-        .toggle-btn.active {
-            border-color: #2d5a3a;
-            background: #e8f0e8;
-            color: #2d5a3a;
-            font-weight: 500;
-        }
-
+        .translation-section { margin-bottom: 2rem; }
+        .toggle-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .toggle-btn { padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 20px; background: #fff; cursor: pointer; font-size: 0.85rem; color: #666; transition: all 0.2s; }
+        .toggle-btn.active { border-color: #2d5a3a; background: #e8f0e8; color: #2d5a3a; font-weight: 500; }
         .toggle-btn:hover:not(.active) { border-color: #aaa; }
 
         /* Generate Button */
-        .generate-btn {
-            padding: 0.9rem 2rem;
-            background: #2d5a3a;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 2rem;
-        }
+        .generate-btn { padding: 0.9rem 2rem; background: #2d5a3a; color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-bottom: 2rem; }
+        .generate-btn:hover { background: #1e4028; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(45,90,58,0.3); }
+        .btn-small { font-size: 0.85rem; padding: 0.6rem 1.2rem; margin-bottom: 0; }
 
-        .generate-btn:hover {
-            background: #1e4028;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(45,90,58,0.3);
-        }
-
-        /* Output Cards */
-        .output-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .output-card {
-            border: 1px solid #e0ddd8;
-            border-radius: 10px;
-            background: #fff;
-            overflow: hidden;
-        }
-
-        .output-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #f0ede8;
-            background: #fafaf8;
-        }
-
-        .output-card-header .title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .output-card-header .badge {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
+        /* Output */
+        .output-section { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .output-card { border: 1px solid #e0ddd8; border-radius: 10px; background: #fff; overflow: hidden; }
+        .output-card-header { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-bottom: 1px solid #f0ede8; background: #fafaf8; }
+        .output-card-header .title { font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .badge { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; }
         .badge-frame { background: #e8f0e8; color: #2d5a3a; }
         .badge-noframe { background: #fff3e0; color: #b87333; }
-
-        .copy-btn {
-            padding: 0.4rem 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: #fff;
-            cursor: pointer;
-            font-size: 0.8rem;
-            color: #666;
-            transition: all 0.15s;
-        }
-
+        .copy-btn { padding: 0.4rem 0.75rem; border: 1px solid #ddd; border-radius: 5px; background: #fff; cursor: pointer; font-size: 0.8rem; color: #666; transition: all 0.15s; }
         .copy-btn:hover { border-color: #2d5a3a; color: #2d5a3a; }
         .copy-btn.copied { border-color: #2d5a3a; color: #2d5a3a; background: #e8f0e8; }
-
-        .output-card-body {
-            padding: 1.25rem;
-            font-size: 0.88rem;
-            line-height: 1.7;
-            color: #444;
-            max-height: 300px;
-            overflow-y: auto;
-        }
+        .output-card-body { padding: 1.25rem; font-size: 0.88rem; line-height: 1.7; color: #444; max-height: 300px; overflow-y: auto; }
+        .empty-output { grid-column: 1 / -1; text-align: center; padding: 3rem; color: #aaa; font-size: 0.95rem; }
 
         /* Tip */
-        .tip {
-            padding: 1rem 1.25rem;
-            background: #fff;
-            border: 1px solid #e0ddd8;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: #666;
-        }
-
+        .tip { padding: 1rem 1.25rem; background: #fff; border: 1px solid #e0ddd8; border-radius: 8px; font-size: 0.85rem; color: #666; margin-top: 1rem; }
         .tip strong { color: #333; }
-
-        /* Empty state */
-        .empty-output {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem;
-            color: #aaa;
-            font-size: 0.95rem;
-        }
 
         /* Tab panels */
         .tab-panel { display: none; }
         .tab-panel.active { display: block; }
 
-        /* Export sizes panel */
-        .export-panel {
-            background: #fff;
-            border: 1px solid #e0ddd8;
-            border-radius: 10px;
-            padding: 2rem;
-        }
-
-        .size-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .size-card {
-            border: 1px solid #e8e5e0;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-        }
-
+        /* Export */
+        .export-panel { background: #fff; border: 1px solid #e0ddd8; border-radius: 10px; padding: 2rem; }
+        .size-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .size-card { border: 1px solid #e8e5e0; border-radius: 8px; padding: 1rem; text-align: center; }
         .size-card .dimensions { font-size: 1.1rem; font-weight: 600; color: #2d5a3a; }
         .size-card .pixels { font-size: 0.8rem; color: #999; margin-top: 0.25rem; }
         .size-card .use { font-size: 0.8rem; color: #666; margin-top: 0.5rem; }
 
-        @media (max-width: 768px) {
-            .output-section { grid-template-columns: 1fr; }
-            .verse-grid { grid-template-columns: 1fr; }
-            .style-grid { grid-template-columns: 1fr 1fr; }
-        }
+        @media (max-width: 768px) { .output-section { grid-template-columns: 1fr; } .card-grid { grid-template-columns: 1fr; } .style-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .style-grid { grid-template-columns: 1fr; } }
 
-        @media (max-width: 480px) {
-            .style-grid { grid-template-columns: 1fr; }
-        }
+        /* Drop Zone */
+        .drop-zone { border: 2px dashed #ccc; border-radius: 12px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff; min-height: 200px; display: flex; align-items: center; justify-content: center; }
+        .drop-zone:hover, .drop-zone.dragover { border-color: #2d5a3a; background: #f0f5f0; }
+        .drop-zone-content { pointer-events: none; }
+        .preview-container { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; width: 100%; }
+        .preview-image { max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .image-info { font-size: 0.85rem; color: #666; }
+        .remove-btn { padding: 0.4rem 0.8rem; border: 1px solid #e0ddd8; border-radius: 6px; background: #fff; cursor: pointer; font-size: 0.8rem; color: #c83232; transition: all 0.15s; }
+        .remove-btn:hover { background: #fef0f0; border-color: #c83232; }
+
+        /* Selectable size cards */
+        .size-card.selectable { cursor: pointer; position: relative; transition: all 0.2s; }
+        .size-card.selectable:hover { border-color: #b8c9b8; }
+        .size-card.selectable .size-check { position: absolute; top: 0.75rem; right: 0.75rem; width: 16px; height: 16px; accent-color: #2d5a3a; }
+
+        /* Export status */
+        .export-status { padding: 1rem; border-radius: 8px; font-size: 0.9rem; margin-top: 1rem; }
+        .export-status.success { background: #e8f5e9; color: #2d5a3a; border: 1px solid #c8e6c9; }
+        .export-status.error { background: #fef0f0; color: #c83232; border: 1px solid #ffcdd2; }
+        .export-status.processing { background: #fff8e1; color: #b87333; border: 1px solid #ffe0b2; }
     </style>
 </head>
 <body>
 <div class="container">
 
-    <!-- Tabs -->
-    <div class="tabs">
-        <div class="tab active" data-tab="generator">✨ Prompt generator</div>
-        <div class="tab" data-tab="export">↓ Export sizes</div>
+    <div class="top-tabs">
+        <div class="top-tab active" data-tab="generator">✨ Prompt generator</div>
+        <div class="top-tab" data-tab="export">↓ Export sizes</div>
     </div>
 
-    <!-- Generator Panel -->
     <div class="tab-panel active" id="panel-generator">
 
-        <!-- Verse Selection -->
-        <div class="section-label">Select Quran Verse</div>
-        <div class="verse-grid" id="verseGrid"></div>
-
-        <!-- Custom Verse -->
-        <div class="custom-verse-toggle" id="customToggle">
-            ✏️ Add a custom verse
-            <span style="margin-left:auto;color:#aaa;font-size:0.8rem">Click to expand ↓</span>
+        <!-- Category Selector -->
+        <div class="category-tabs" id="categoryTabs">
+            <div class="cat-tab active" data-cat="quran">📖 Quran Verses</div>
+            <div class="cat-tab" data-cat="names">✨ Names of Allah</div>
+            <div class="cat-tab" data-cat="kids">🧸 Kids / Nursery</div>
+            <div class="cat-tab" data-cat="geometric">🔷 Geometric Patterns</div>
+            <div class="cat-tab" data-cat="seasonal">🌙 Ramadan / Eid</div>
+            <div class="cat-tab" data-cat="phrases">🤲 Phrases / Dhikr</div>
         </div>
-        <div class="custom-verse-form" id="customForm">
-            <input type="text" class="arabic-input" id="customArabic" placeholder="اكتب الآية بالعربية...">
-            <input type="text" id="customTranslation" placeholder="English translation...">
-            <input type="text" id="customReference" placeholder="Surah and verse (e.g. Al-Baqarah 2:286)">
-            <button class="generate-btn" style="font-size:0.85rem;padding:0.6rem 1.2rem" onclick="addCustomVerse()">+ Add verse</button>
+
+        <!-- Content Selection -->
+        <div class="section-label" id="selectionLabel">Select Quran Verse</div>
+        <div class="card-grid" id="cardGrid"></div>
+
+        <!-- Custom Add -->
+        <div class="custom-toggle" id="customToggle">✏️ Add a custom entry <span style="margin-left:auto;color:#aaa;font-size:0.8rem">Click to expand ↓</span></div>
+        <div class="custom-form" id="customForm">
+            <input type="text" class="arabic-input" id="customArabic" placeholder="اكتب بالعربية...">
+            <input type="text" id="customTranslation" placeholder="English translation / meaning...">
+            <input type="text" id="customReference" placeholder="Reference (e.g. Surah Al-Baqarah 2:286)">
+            <button class="generate-btn btn-small" onclick="addCustomEntry()">+ Add</button>
         </div>
 
         <!-- Customize Style -->
         <div class="style-section">
             <div class="section-label">Customize Style</div>
             <div class="style-grid">
-                <div class="style-field">
-                    <label>Color Palette</label>
-                    <select id="colorPalette"></select>
-                </div>
-                <div class="style-field">
-                    <label>Animal / Element</label>
-                    <select id="animalElement"></select>
-                </div>
-                <div class="style-field">
-                    <label>Background Scene</label>
-                    <select id="backgroundScene"></select>
-                </div>
-                <div class="style-field">
-                    <label>Frame Style (Mockup)</label>
-                    <select id="frameStyle"></select>
-                </div>
+                <div class="style-field"><label>Color Palette</label><select id="colorPalette"></select></div>
+                <div class="style-field"><label>Animal / Element</label><select id="animalElement"></select></div>
+                <div class="style-field"><label>Background Scene</label><select id="backgroundScene"></select></div>
+                <div class="style-field"><label>Frame Style (Mockup)</label><select id="frameStyle"></select></div>
             </div>
         </div>
 
@@ -443,208 +172,243 @@
             </div>
         </div>
 
-        <!-- Generate -->
         <button class="generate-btn" onclick="generatePrompts()">✨ Generate both prompts</button>
 
-        <!-- Output -->
         <div class="output-section" id="outputSection">
-            <div class="empty-output">Select a verse and customize your style, then click generate.</div>
+            <div class="empty-output">Select content and customize your style, then click generate.</div>
         </div>
 
-        <!-- Tip -->
         <div class="tip">
-            <strong>💡 DPI tip:</strong> DPI cannot be set in prompts. To get 300 DPI prints, generate at the highest resolution possible (Midjourney: upscale to max, Ideogram: 2048px), then use the <strong>Export sizes</strong> tab to resize to exact pixel dimensions. The export sets 300 DPI metadata automatically.
+            <strong>💡 DPI tip:</strong> DPI cannot be set in prompts. To get 300 DPI prints, generate at the highest resolution possible (Midjourney: upscale to max, Ideogram: 2048px), then use the <strong>Export sizes</strong> tab to resize to exact pixel dimensions.
         </div>
     </div>
 
-    <!-- Export Panel -->
     <div class="tab-panel" id="panel-export">
         <div class="export-panel">
-            <h2 style="margin-bottom:0.5rem;color:#2d5a3a">Export Sizes for Etsy</h2>
-            <p style="color:#666;font-size:0.9rem;margin-bottom:1.5rem">Recommended print sizes at 300 DPI for digital download listings.</p>
-            <div class="size-grid">
-                <div class="size-card">
-                    <div class="dimensions">5×7"</div>
-                    <div class="pixels">1500 × 2100 px</div>
-                    <div class="use">Small prints, greeting cards</div>
+            <h2 style="margin-bottom:0.5rem;color:#2d5a3a">Import & Export for Etsy</h2>
+            <p style="color:#666;font-size:0.9rem;margin-bottom:1.5rem">Upload your AI-generated image, select sizes, and download print-ready files at 300 DPI.</p>
+
+            <!-- Step 1: Import -->
+            <div class="section-label" style="margin-top:1rem">Step 1 — Import your image</div>
+            <div id="dropZone" class="drop-zone">
+                <div class="drop-zone-content" id="dropContent">
+                    <div style="font-size:2.5rem;margin-bottom:0.5rem">📁</div>
+                    <p><strong>Drag & drop your image here</strong></p>
+                    <p style="font-size:0.85rem;color:#999;margin-top:0.25rem">or click to browse (PNG, JPG, WebP)</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display:none">
                 </div>
-                <div class="size-card">
-                    <div class="dimensions">8×10"</div>
-                    <div class="pixels">2400 × 3000 px</div>
-                    <div class="use">Most popular Etsy size</div>
+                <div id="previewContainer" class="preview-container" style="display:none">
+                    <img id="previewImage" class="preview-image">
+                    <div id="imageInfo" class="image-info"></div>
+                    <button class="remove-btn" onclick="removeImage()">✕ Remove</button>
                 </div>
-                <div class="size-card">
-                    <div class="dimensions">11×14"</div>
-                    <div class="pixels">3300 × 4200 px</div>
-                    <div class="use">Medium wall art</div>
+            </div>
+
+            <!-- Step 2: Select Sizes -->
+            <div class="section-label" style="margin-top:2rem">Step 2 — Select export sizes</div>
+            <p style="font-size:0.85rem;color:#888;margin-bottom:1rem">Pick which sizes to export. Your image will be resized and cropped to fit each ratio.</p>
+            <div class="size-grid" id="sizeGrid">
+                <div class="size-card selectable" data-size="5x7" data-w="1500" data-h="2100">
+                    <input type="checkbox" class="size-check" checked> 
+                    <div class="dimensions">5×7"</div><div class="pixels">1500 × 2100 px</div><div class="use">Small prints, greeting cards</div>
                 </div>
-                <div class="size-card">
-                    <div class="dimensions">16×20"</div>
-                    <div class="pixels">4800 × 6000 px</div>
-                    <div class="use">Large statement piece</div>
+                <div class="size-card selectable" data-size="8x10" data-w="2400" data-h="3000">
+                    <input type="checkbox" class="size-check" checked>
+                    <div class="dimensions">8×10"</div><div class="pixels">2400 × 3000 px</div><div class="use">Most popular Etsy size</div>
                 </div>
-                <div class="size-card">
-                    <div class="dimensions">18×24"</div>
-                    <div class="pixels">5400 × 7200 px</div>
-                    <div class="use">Poster size</div>
+                <div class="size-card selectable" data-size="11x14" data-w="3300" data-h="4200">
+                    <input type="checkbox" class="size-check" checked>
+                    <div class="dimensions">11×14"</div><div class="pixels">3300 × 4200 px</div><div class="use">Medium wall art</div>
                 </div>
-                <div class="size-card">
-                    <div class="dimensions">A4</div>
-                    <div class="pixels">2480 × 3508 px</div>
-                    <div class="use">International standard</div>
+                <div class="size-card selectable" data-size="16x20" data-w="4800" data-h="6000">
+                    <input type="checkbox" class="size-check">
+                    <div class="dimensions">16×20"</div><div class="pixels">4800 × 6000 px</div><div class="use">Large statement piece</div>
                 </div>
-                <div class="size-card">
-                    <div class="dimensions">A3</div>
-                    <div class="pixels">3508 × 4961 px</div>
-                    <div class="use">Large international</div>
+                <div class="size-card selectable" data-size="18x24" data-w="5400" data-h="7200">
+                    <input type="checkbox" class="size-check">
+                    <div class="dimensions">18×24"</div><div class="pixels">5400 × 7200 px</div><div class="use">Poster size</div>
                 </div>
-                <div class="size-card">
-                    <div class="dimensions">Square 12×12"</div>
-                    <div class="pixels">3600 × 3600 px</div>
-                    <div class="use">Square frames, Instagram</div>
+                <div class="size-card selectable" data-size="A4" data-w="2480" data-h="3508">
+                    <input type="checkbox" class="size-check" checked>
+                    <div class="dimensions">A4</div><div class="pixels">2480 × 3508 px</div><div class="use">International standard</div>
                 </div>
+                <div class="size-card selectable" data-size="A3" data-w="3508" data-h="4961">
+                    <input type="checkbox" class="size-check">
+                    <div class="dimensions">A3</div><div class="pixels">3508 × 4961 px</div><div class="use">Large international</div>
+                </div>
+                <div class="size-card selectable" data-size="12x12" data-w="3600" data-h="3600">
+                    <input type="checkbox" class="size-check">
+                    <div class="dimensions">Square 12×12"</div><div class="pixels">3600 × 3600 px</div><div class="use">Square frames, Instagram</div>
+                </div>
+            </div>
+
+            <!-- Step 3: Export -->
+            <div class="section-label" style="margin-top:2rem">Step 3 — Export</div>
+            <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem">
+                <button class="generate-btn" style="margin-bottom:0" onclick="exportImages()">📥 Export selected sizes</button>
+                <label style="font-size:0.85rem;color:#666;display:flex;align-items:center;gap:0.4rem">
+                    <input type="checkbox" id="exportJpg"> Export as JPG (smaller file size)
+                </label>
+            </div>
+            <div id="exportStatus" class="export-status" style="display:none"></div>
+
+            <!-- Tip -->
+            <div class="tip" style="margin-top:1.5rem">
+                <strong>💡 How it works:</strong> Your image is resized using the browser's canvas API. It crops from center to match each aspect ratio, then scales to the exact pixel dimensions. Files are named like <code>islamic-art-8x10-2400x3000.png</code> — ready to upload directly to Etsy.
             </div>
         </div>
     </div>
-
 </div>
 
 <script>
+
 // ============================================================
-// DATA
+// DATA — ALL CATEGORIES
 // ============================================================
 
-const VERSES = [
-    { arabic: "الَّذِينَ آمَنُوا وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ اللَّهِ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", translation: "Verily, in the remembrance of Allah do hearts find rest", reference: "Surah Ar-Ra'd 13:28" },
-    { arabic: "وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ", translation: "Whoever relies upon Allah — then He is sufficient for him", reference: "Surah At-Talaq 65:3" },
-    { arabic: "إِنَّ مَعَ الْعُسْرِ يُسْرًا", translation: "Indeed, with hardship will be ease", reference: "Surah Ash-Sharh 94:6" },
-    { arabic: "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ", translation: "Our Lord, grant us from our spouses and offspring the comfort of our eyes", reference: "Surah Al-Furqan 25:74" },
-    { arabic: "وَقُل رَّبِّ زِدْنِي عِلْمًا", translation: "And say: My Lord, increase me in knowledge", reference: "Surah Ta-Ha 20:114" },
-    { arabic: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", translation: "Indeed, Allah is with the patient", reference: "Surah Al-Baqarah 2:153" },
-    { arabic: "فَاذْكُرُونِي أَذْكُرْكُمْ", translation: "Remember Me, and I will remember you", reference: "Surah Al-Baqarah 2:152" },
-    { arabic: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ", translation: "Allah is sufficient for us, and He is the best disposer of affairs", reference: "Surah Aal-Imran 3:173" },
-];
+const DATA = {
+    quran: {
+        label: "Select Quran Verse",
+        items: [
+            { arabic: "الَّذِينَ آمَنُوا وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ اللَّهِ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", translation: "Verily, in the remembrance of Allah do hearts find rest", reference: "Surah Ar-Ra'd 13:28" },
+            { arabic: "وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ", translation: "Whoever relies upon Allah — then He is sufficient for him", reference: "Surah At-Talaq 65:3" },
+            { arabic: "إِنَّ مَعَ الْعُسْرِ يُسْرًا", translation: "Indeed, with hardship will be ease", reference: "Surah Ash-Sharh 94:6" },
+            { arabic: "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ", translation: "Our Lord, grant us from our spouses and offspring the comfort of our eyes", reference: "Surah Al-Furqan 25:74" },
+            { arabic: "وَقُل رَّبِّ زِدْنِي عِلْمًا", translation: "And say: My Lord, increase me in knowledge", reference: "Surah Ta-Ha 20:114" },
+            { arabic: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", translation: "Indeed, Allah is with the patient", reference: "Surah Al-Baqarah 2:153" },
+            { arabic: "فَاذْكُرُونِي أَذْكُرْكُمْ", translation: "Remember Me, and I will remember you", reference: "Surah Al-Baqarah 2:152" },
+            { arabic: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ", translation: "Allah is sufficient for us, and He is the best disposer of affairs", reference: "Surah Aal-Imran 3:173" },
+            { arabic: "وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ", translation: "And your Lord is going to give you, and you will be satisfied", reference: "Surah Ad-Duha 93:5" },
+            { arabic: "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي", translation: "My Lord, expand my chest and ease my task for me", reference: "Surah Ta-Ha 20:25-26" },
+        ]
+    },
+    names: {
+        label: "Select Name of Allah",
+        items: [
+            { arabic: "الرَّحْمَن", translation: "Ar-Rahman — The Most Gracious", reference: "" },
+            { arabic: "الرَّحِيم", translation: "Ar-Raheem — The Most Merciful", reference: "" },
+            { arabic: "السَّلَام", translation: "As-Salam — The Source of Peace", reference: "" },
+            { arabic: "الْوَدُود", translation: "Al-Wadud — The Most Loving", reference: "" },
+            { arabic: "النُّور", translation: "An-Nur — The Light", reference: "" },
+            { arabic: "الْكَرِيم", translation: "Al-Kareem — The Most Generous", reference: "" },
+            { arabic: "الْغَفُور", translation: "Al-Ghafur — The All-Forgiving", reference: "" },
+            { arabic: "الْحَكِيم", translation: "Al-Hakeem — The All-Wise", reference: "" },
+            { arabic: "الصَّبُور", translation: "As-Sabur — The Most Patient", reference: "" },
+            { arabic: "الشَّكُور", translation: "Ash-Shakur — The Most Appreciative", reference: "" },
+            { arabic: "الْوَكِيل", translation: "Al-Wakeel — The Trustee", reference: "" },
+            { arabic: "الْجَمِيل", translation: "Al-Jameel — The Beautiful", reference: "" },
+            { arabic: "الرَّزَّاق", translation: "Ar-Razzaq — The Provider", reference: "" },
+            { arabic: "الْهَادِي", translation: "Al-Hadi — The Guide", reference: "" },
+            { arabic: "الْمُجِيب", translation: "Al-Mujeeb — The Responsive", reference: "" },
+        ]
+    },
+    kids: {
+        label: "Select Kids / Nursery Theme",
+        items: [
+            { arabic: "بِسْمِ اللَّه", translation: "Bismillah — Cute mosque with smiling crescent moon", reference: "Nursery" },
+            { arabic: "الحمد لله", translation: "Alhamdulillah — Friendly animals reading Quran together", reference: "Nursery" },
+            { arabic: "ما شاء الله", translation: "MashaAllah — Rainbow over a mosque", reference: "Nursery" },
+            { arabic: "سبحان الله", translation: "SubhanAllah — Baby deer near a tree with heart leaves", reference: "Nursery" },
+            { arabic: "إن شاء الله", translation: "InshaAllah — Hot air balloon with Islamic patterns", reference: "Nursery" },
+            { arabic: "توكلت على الله", translation: "Tawakkalt — Little Muslim girl picking flowers", reference: "Nursery" },
+            { arabic: "جزاك الله خيرا", translation: "JazakAllah — Cute owl on a branch", reference: "Nursery" },
+            { arabic: "بارك الله فيك", translation: "BarakAllah — Friendly camel in desert with stars", reference: "Nursery" },
+            { arabic: "لا إله إلا الله", translation: "La ilaha illallah — Space theme with planets", reference: "Nursery" },
+            { arabic: "الله أكبر", translation: "Allahu Akbar — Underwater scene with fish", reference: "Nursery" },
+            { arabic: "أستغفر الله", translation: "Astaghfirullah — Garden of flowers", reference: "Nursery" },
+            { arabic: "اللهم صل على محمد", translation: "Allahumma salli — Teddy bear making dua", reference: "Nursery" },
+        ]
+    },
+    geometric: {
+        label: "Select Geometric Pattern",
+        items: [
+            { arabic: "", translation: "Eight-pointed star (Rub el Hizb) — Classic Islamic star pattern", reference: "Geometric" },
+            { arabic: "", translation: "Interlocking hexagonal tessellation — Honeycomb-inspired", reference: "Geometric" },
+            { arabic: "", translation: "Arabesque floral geometric — Organic meets mathematical", reference: "Geometric" },
+            { arabic: "", translation: "Moroccan zellige tile — Traditional mosaic", reference: "Geometric" },
+            { arabic: "", translation: "Muqarnas honeycomb — 3D stalactite vault pattern", reference: "Geometric" },
+            { arabic: "", translation: "Girih tile pattern — Pentagons and decagons", reference: "Geometric" },
+            { arabic: "", translation: "Islamic rosette — Circular radiating pattern", reference: "Geometric" },
+            { arabic: "", translation: "Infinite knot — Continuous interlacing lines", reference: "Geometric" },
+            { arabic: "", translation: "Star and cross tessellation — Repeating grid", reference: "Geometric" },
+            { arabic: "", translation: "Dodecagonal star — 12-pointed complex star", reference: "Geometric" },
+            { arabic: "", translation: "Mashrabiya screen — Lattice woodwork pattern", reference: "Geometric" },
+            { arabic: "", translation: "Penrose-inspired Islamic tiling — Aperiodic pattern", reference: "Geometric" },
+        ]
+    },
+    seasonal: {
+        label: "Select Seasonal Theme",
+        items: [
+            { arabic: "رمضان كريم", translation: "Ramadan Kareem — Lanterns and crescent moon", reference: "Ramadan" },
+            { arabic: "عيد مبارك", translation: "Eid Mubarak — Celebration scene with gifts", reference: "Eid" },
+            { arabic: "ليلة القدر", translation: "Laylatul Qadr — Night of Power, starry sky with angels", reference: "Ramadan" },
+            { arabic: "رمضان مبارك", translation: "Ramadan Mubarak — Iftar table with dates and lanterns", reference: "Ramadan" },
+            { arabic: "عيد الأضحى", translation: "Eid Al-Adha — Sheep and family celebration", reference: "Eid" },
+            { arabic: "هلال رمضان", translation: "Hilal Ramadan — Crescent moon sighting scene", reference: "Ramadan" },
+            { arabic: "تقبل الله", translation: "Taqabbal Allah — Hajj / Kaaba pilgrimage art", reference: "Hajj" },
+            { arabic: "كل عام وأنتم بخير", translation: "Kul aam — Islamic New Year (Hijri)", reference: "New Year" },
+            { arabic: "اللهم بلغنا رمضان", translation: "Allahumma ballighna Ramadan — Countdown to Ramadan", reference: "Ramadan" },
+            { arabic: "العيد فرحة", translation: "Al-Eid Farha — Eid joy with children and balloons", reference: "Eid" },
+        ]
+    },
+    phrases: {
+        label: "Select Islamic Phrase / Dhikr",
+        items: [
+            { arabic: "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ", translation: "Bismillah ir-Rahman ir-Raheem — In the name of Allah, the Most Gracious, the Most Merciful", reference: "Daily dhikr" },
+            { arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", translation: "Alhamdulillahi Rabbil Aalameen — All praise is due to Allah, Lord of the worlds", reference: "Daily dhikr" },
+            { arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", translation: "SubhanAllahi wa bihamdihi — Glory be to Allah and His praise", reference: "Daily dhikr" },
+            { arabic: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", translation: "La hawla wala quwwata illa billah — There is no power except with Allah", reference: "Daily dhikr" },
+            { arabic: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّد", translation: "Allahumma salli ala Muhammad — O Allah, send blessings upon Muhammad", reference: "Salawat" },
+            { arabic: "أَسْتَغْفِرُ اللَّهَ الْعَظِيم", translation: "Astaghfirullah al-Azeem — I seek forgiveness from Allah the Almighty", reference: "Istighfar" },
+            { arabic: "لَا إِلَهَ إِلَّا اللَّهُ مُحَمَّدٌ رَسُولُ اللَّهِ", translation: "La ilaha illallah Muhammadur Rasulullah — The Shahada", reference: "Declaration of faith" },
+            { arabic: "سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ", translation: "SubhanAllah, Alhamdulillah, La ilaha illallah, Allahu Akbar — The four praises", reference: "Tasbih" },
+            { arabic: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ", translation: "Hasbiyallahu la ilaha illa huwa — Allah is sufficient for me, there is no god but Him", reference: "Morning/Evening dhikr" },
+            { arabic: "رَضِيتُ بِاللَّهِ رَبًّا وَبِالْإِسْلَامِ دِينًا", translation: "Raditu billahi rabba — I am pleased with Allah as Lord and Islam as religion", reference: "Morning/Evening dhikr" },
+        ]
+    }
+};
 
 const COLOR_PALETTES = [
-    "Spring pastel (mint, blush, lavender, cream)",
-    "Earthy terracotta (clay, olive, sand, rust)",
-    "Navy & gold luxury",
-    "Black & gold minimalist",
-    "Sage & blush pink",
-    "Ocean blues (teal, aqua, navy, seafoam)",
-    "Warm sunset (peach, coral, amber, gold)",
-    "Jewel tones (emerald, sapphire, ruby, amethyst)",
-    "Dusty rose & champagne gold",
-    "Forest green & cream",
-    "Midnight blue & copper",
-    "Neutral beige & white",
-    "Lavender & silver",
-    "Teal & coral",
-    "Mocha & ivory",
-    "Burgundy & gold",
-    "Olive & mustard",
-    "Plum & rose gold",
-    "Sky blue & white",
-    "Charcoal & blush",
-    "Emerald & gold",
-    "Cinnamon & cream",
-    "Mauve & sage",
-    "Turquoise & sand",
-    "Blush & grey",
-    "Rust & teal",
-    "Ivory & bronze",
-    "Soft rainbow pastels",
-    "Monochrome grey tones",
-    "Warm neutrals (tan, beige, cream, white)"
+    "Spring pastel (mint, blush, lavender, cream)", "Earthy terracotta (clay, olive, sand, rust)",
+    "Navy & gold luxury", "Black & gold minimalist", "Sage & blush pink",
+    "Ocean blues (teal, aqua, navy, seafoam)", "Warm sunset (peach, coral, amber, gold)",
+    "Jewel tones (emerald, sapphire, ruby, amethyst)", "Dusty rose & champagne gold",
+    "Forest green & cream", "Midnight blue & copper", "Neutral beige & white",
+    "Lavender & silver", "Teal & coral", "Mocha & ivory", "Burgundy & gold",
+    "Olive & mustard", "Plum & rose gold", "Sky blue & white", "Charcoal & blush",
+    "Emerald & gold", "Cinnamon & cream", "Mauve & sage", "Turquoise & sand",
+    "Blush & grey", "Rust & teal", "Ivory & bronze", "Soft rainbow pastels",
+    "Monochrome grey tones", "Warm neutrals (tan, beige, cream, white)"
 ];
 
 const ANIMALS_ELEMENTS = [
-    "Butterfly (patterned wings)",
-    "Deer / Gazelle",
-    "Bird (sparrow)",
-    "Bird (robin)",
-    "Bird (goldfinch)",
-    "Pair of lovebirds",
-    "Rabbit",
-    "Cat (sitting)",
-    "Cat (sleeping)",
-    "Peacock",
-    "Dove (white)",
-    "Owl",
-    "Hummingbird",
-    "Swan",
-    "Fox",
-    "Lamb / Sheep",
-    "Horse (Arabian)",
-    "Camel",
-    "Elephant (baby)",
-    "Whale",
-    "Fish (koi)",
-    "Dragonfly",
-    "Ladybug",
-    "Bee",
-    "Turtle",
-    "Hedgehog",
-    "Squirrel",
-    "Flowers only (roses)",
-    "Flowers only (wildflowers)",
-    "Flowers only (peonies)",
-    "Flowers only (sunflowers)",
-    "Flowers only (lotus)",
-    "Olive branch",
-    "Leaves & vines",
-    "Palm trees",
-    "Cherry blossom branch",
-    "Eucalyptus leaves",
-    "Stars & crescent moon",
-    "Hanging lanterns",
-    "Trees (large oak with hearts)",
-    "Trees (willow)",
-    "Trees (olive tree)",
-    "Hot air balloon",
-    "Clouds & rainbow",
-    "Feathers",
-    "Seashells",
-    "Mushrooms (whimsical)",
-    "None"
+    "Butterfly (patterned wings)", "Deer / Gazelle", "Bird (sparrow)", "Bird (robin)",
+    "Bird (goldfinch)", "Pair of lovebirds", "Rabbit", "Cat (sitting)", "Cat (sleeping)",
+    "Peacock", "Dove (white)", "Owl", "Hummingbird", "Swan", "Fox", "Lamb / Sheep",
+    "Horse (Arabian)", "Camel", "Elephant (baby)", "Whale", "Fish (koi)", "Dragonfly",
+    "Ladybug", "Bee", "Turtle", "Hedgehog", "Squirrel", "Flowers only (roses)",
+    "Flowers only (wildflowers)", "Flowers only (peonies)", "Flowers only (sunflowers)",
+    "Flowers only (lotus)", "Olive branch", "Leaves & vines", "Palm trees",
+    "Cherry blossom branch", "Eucalyptus leaves", "Stars & crescent moon",
+    "Hanging lanterns", "Trees (large oak with hearts)", "Trees (willow)",
+    "Trees (olive tree)", "Hot air balloon", "Clouds & rainbow", "Feathers",
+    "Seashells", "Mushrooms (whimsical)", "None"
 ];
 
 const BACKGROUNDS = [
-    "Garden paradise with arched doorway",
-    "Starry night sky with crescent moon",
-    "Desert sunset with sand dunes",
-    "Ocean shore with gentle waves",
-    "Mountain landscape at dawn",
-    "Meadow with wildflowers",
-    "Cloudy sky with golden light",
-    "Minimalist white",
-    "Textured cream paper",
-    "Watercolor wash (soft blend)",
-    "Arch doorway (mihrab style)",
-    "Forest clearing with sunbeams",
-    "Abstract geometric pattern",
-    "Rolling green hills",
-    "Tropical jungle leaves",
-    "Snowy winter scene",
-    "Cherry blossom garden",
-    "Underwater coral reef",
-    "Space / galaxy",
-    "Rainy window with bokeh",
-    "Autumn forest (orange & gold leaves)",
-    "Lavender field",
-    "Bamboo grove",
-    "Rooftop with city skyline",
-    "Inside a cozy room (window view)",
-    "Mosque courtyard",
-    "Oasis with palm trees",
-    "Riverbank with stones",
-    "Sunrise over calm lake",
-    "Foggy morning forest",
-    "Floating clouds (dreamy)",
-    "Geometric Islamic tiles (background)",
-    "Gradient (warm to cool)",
-    "Gradient (single color fade)",
-    "Plain solid color"
+    "Garden paradise with arched doorway", "Starry night sky with crescent moon",
+    "Desert sunset with sand dunes", "Ocean shore with gentle waves",
+    "Mountain landscape at dawn", "Meadow with wildflowers", "Cloudy sky with golden light",
+    "Minimalist white", "Textured cream paper", "Watercolor wash (soft blend)",
+    "Arch doorway (mihrab style)", "Forest clearing with sunbeams",
+    "Abstract geometric pattern", "Rolling green hills", "Tropical jungle leaves",
+    "Snowy winter scene", "Cherry blossom garden", "Underwater coral reef",
+    "Space / galaxy", "Rainy window with bokeh", "Autumn forest (orange & gold leaves)",
+    "Lavender field", "Bamboo grove", "Rooftop with city skyline",
+    "Inside a cozy room (window view)", "Mosque courtyard", "Oasis with palm trees",
+    "Riverbank with stones", "Sunrise over calm lake", "Foggy morning forest",
+    "Floating clouds (dreamy)", "Geometric Islamic tiles (background)",
+    "Gradient (warm to cool)", "Gradient (single color fade)", "Plain solid color"
 ];
 
 const FRAME_STYLES = [
@@ -656,32 +420,41 @@ const FRAME_STYLES = [
 // STATE
 // ============================================================
 
-let selectedVerseIndex = null;
+let currentCategory = "quran";
+let selectedIndex = null;
 let selectedTranslation = "both";
-let customVerses = [];
+let customEntries = { quran: [], names: [], kids: [], geometric: [], seasonal: [], phrases: [] };
 
 // ============================================================
-// INIT
+// INIT & RENDER
 // ============================================================
 
 function init() {
-    renderVerses();
+    renderCards();
     populateDropdowns();
-    setupTabs();
+    setupTopTabs();
+    setupCategoryTabs();
     setupTranslationToggle();
-    setupCustomToggle();
+    document.getElementById('customToggle').addEventListener('click', () => {
+        document.getElementById('customForm').classList.toggle('visible');
+    });
 }
 
-function renderVerses() {
-    const grid = document.getElementById('verseGrid');
-    const allVerses = [...VERSES, ...customVerses];
-    grid.innerHTML = allVerses.map((v, i) => `
-        <div class="verse-card ${selectedVerseIndex === i ? 'selected' : ''}" onclick="selectVerse(${i})">
-            <div class="arabic">${v.arabic}</div>
-            <div class="translation">${v.translation}</div>
-            <div class="reference">${v.reference}</div>
-        </div>
-    `).join('');
+function renderCards() {
+    const grid = document.getElementById('cardGrid');
+    const cat = DATA[currentCategory];
+    const allItems = [...cat.items, ...customEntries[currentCategory]];
+    document.getElementById('selectionLabel').textContent = cat.label;
+
+    grid.innerHTML = allItems.map((item, i) => {
+        const hasArabic = item.arabic && item.arabic.trim();
+        return `
+        <div class="card ${selectedIndex === i ? 'selected' : ''}" onclick="selectCard(${i})">
+            ${hasArabic ? `<div class="arabic">${item.arabic}</div>` : ''}
+            <div class="subtitle">${item.translation}</div>
+            ${item.reference ? `<div class="reference">${item.reference}</div>` : ''}
+        </div>`;
+    }).join('');
 }
 
 function populateDropdowns() {
@@ -692,17 +465,28 @@ function populateDropdowns() {
 }
 
 function populateSelect(id, options) {
-    const select = document.getElementById(id);
-    select.innerHTML = options.map(o => `<option value="${o}">${o}</option>`).join('');
+    document.getElementById(id).innerHTML = options.map(o => `<option value="${o}">${o}</option>`).join('');
 }
 
-function setupTabs() {
-    document.querySelectorAll('.tab').forEach(tab => {
+function setupTopTabs() {
+    document.querySelectorAll('.top-tab').forEach(tab => {
         tab.addEventListener('click', () => {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.top-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
             tab.classList.add('active');
             document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
+        });
+    });
+}
+
+function setupCategoryTabs() {
+    document.querySelectorAll('.cat-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentCategory = tab.dataset.cat;
+            selectedIndex = null;
+            renderCards();
         });
     });
 }
@@ -717,81 +501,94 @@ function setupTranslationToggle() {
     });
 }
 
-function setupCustomToggle() {
-    document.getElementById('customToggle').addEventListener('click', () => {
-        document.getElementById('customForm').classList.toggle('visible');
-    });
-}
-
 // ============================================================
 // ACTIONS
 // ============================================================
 
-function selectVerse(index) {
-    selectedVerseIndex = index;
-    renderVerses();
+function selectCard(index) {
+    selectedIndex = index;
+    renderCards();
 }
 
-function addCustomVerse() {
+function addCustomEntry() {
     const arabic = document.getElementById('customArabic').value.trim();
     const translation = document.getElementById('customTranslation').value.trim();
     const reference = document.getElementById('customReference').value.trim();
+    if (!arabic && !translation) { alert('Please enter at least Arabic text or translation'); return; }
 
-    if (!arabic) { alert('Please enter the Arabic text'); return; }
+    customEntries[currentCategory].push({
+        arabic: arabic || '',
+        translation: translation || '',
+        reference: reference || 'Custom'
+    });
 
-    customVerses.push({ arabic, translation: translation || '', reference: reference || 'Custom verse' });
-    selectedVerseIndex = VERSES.length + customVerses.length - 1;
+    const cat = DATA[currentCategory];
+    selectedIndex = cat.items.length + customEntries[currentCategory].length - 1;
 
     document.getElementById('customArabic').value = '';
     document.getElementById('customTranslation').value = '';
     document.getElementById('customReference').value = '';
     document.getElementById('customForm').classList.remove('visible');
-
-    renderVerses();
+    renderCards();
 }
 
 function generatePrompts() {
-    const allVerses = [...VERSES, ...customVerses];
-    if (selectedVerseIndex === null) {
-        alert('Please select a verse first');
-        return;
-    }
+    const cat = DATA[currentCategory];
+    const allItems = [...cat.items, ...customEntries[currentCategory]];
 
-    const verse = allVerses[selectedVerseIndex];
+    if (selectedIndex === null) { alert('Please select an item first'); return; }
+
+    const item = allItems[selectedIndex];
     const palette = document.getElementById('colorPalette').value;
     const animal = document.getElementById('animalElement').value;
     const background = document.getElementById('backgroundScene').value;
     const frame = document.getElementById('frameStyle').value;
 
-    // Build text portion based on translation setting
+    // Build text portion
     let textPortion = '';
-    if (selectedTranslation === 'arabic') {
-        textPortion = `the Arabic Naskh calligraphy "${verse.arabic}" and citation "${verse.reference}"`;
-    } else if (selectedTranslation === 'english') {
-        textPortion = `the English text "${verse.translation}" and citation "${verse.reference}"`;
+    const hasArabic = item.arabic && item.arabic.trim();
+    const hasTranslation = item.translation && item.translation.trim();
+
+    if (currentCategory === 'geometric') {
+        textPortion = `a ${item.translation.split('—')[0].trim()} design`;
+    } else if (selectedTranslation === 'arabic' && hasArabic) {
+        textPortion = `the Arabic Naskh calligraphy "${item.arabic}"${item.reference ? ` and citation "${item.reference}"` : ''}`;
+    } else if (selectedTranslation === 'english' && hasTranslation) {
+        const engText = item.translation.includes('—') ? item.translation.split('—')[1].trim() : item.translation;
+        textPortion = `the English text "${engText}"${item.reference ? ` and citation "${item.reference}"` : ''}`;
     } else {
-        textPortion = `the Arabic Naskh calligraphy "${verse.arabic}" with English subtitle "${verse.translation}" and citation "${verse.reference}"`;
+        if (hasArabic && hasTranslation) {
+            const engText = item.translation.includes('—') ? item.translation.split('—')[1].trim() : item.translation;
+            textPortion = `the Arabic Naskh calligraphy "${item.arabic}" with English subtitle "${engText}"${item.reference ? ` and citation "${item.reference}"` : ''}`;
+        } else if (hasArabic) {
+            textPortion = `the Arabic Naskh calligraphy "${item.arabic}"`;
+        } else {
+            textPortion = `the text "${item.translation}"`;
+        }
     }
 
-    // Animal/element portion
+    // Animal portion
     let animalPortion = '';
     if (animal !== 'None') {
-        const animalClean = animal.replace(/ \(original\)/, '');
-        animalPortion = `. Foreground has a ${animalClean.toLowerCase()} with detailed features`;
+        animalPortion = `. Foreground has a ${animal.toLowerCase()} with detailed features`;
     }
 
-    // Base prompt (shared)
-    const basePrompt = `A whimsical Islamic wall art print in a hand-crafted folk-art collage illustration style. Features a ${background.toLowerCase()} scene with lush organic elements. Center shows ${textPortion}${animalPortion}. Color palette: ${palette.toLowerCase()} tones. Flat layered shapes with visible paper-cut texture and soft watercolor brushstroke overlays, reminiscent of children's book illustration meets Islamic folk art. Warm, joyful, emotionally resonant. Portrait orientation.`;
+    // Category-specific style hints
+    let styleHint = 'hand-crafted folk-art collage illustration';
+    if (currentCategory === 'geometric') styleHint = 'precise geometric Islamic art';
+    if (currentCategory === 'kids') styleHint = 'whimsical children\'s book illustration with paper-cut collage';
+    if (currentCategory === 'seasonal') styleHint = 'festive Islamic celebration illustration';
 
-    // Framed version
+    // Base prompt
+    const basePrompt = `A ${currentCategory === 'kids' ? 'cute and playful' : 'beautiful'} Islamic wall art print in a ${styleHint} style. Features a ${background.toLowerCase()} scene. Center shows ${textPortion}${animalPortion}. Color palette: ${palette.toLowerCase()}. Flat layered shapes with visible paper-cut texture and soft watercolor brushstroke overlays. ${currentCategory === 'kids' ? 'Child-friendly, bright, cheerful, and joyful' : 'Warm, joyful, emotionally resonant'}. Portrait orientation.`;
+
+    // Framed
     const framedPrompt = `${basePrompt} Displayed in a ${frame.toLowerCase()} frame against a neutral linen wall, shot as a lifestyle interior photo, slight perspective angle, soft natural lighting, product mockup photography. High quality, suitable for Etsy digital download listing mockup.`;
 
-    // Art only version
+    // Art only
     const artOnlyPrompt = `${basePrompt} Flat artwork only — no frame, no wall, no background. Clean off-white paper texture background. Perfectly straight portrait orientation, no perspective distortion, no shadows, no props. Print-ready digital file, suitable as a 300 DPI downloadable print.`;
 
-    // Render output
-    const output = document.getElementById('outputSection');
-    output.innerHTML = `
+    document.getElementById('outputSection').innerHTML = `
         <div class="output-card">
             <div class="output-card-header">
                 <div class="title">🖼️ Framed mockup <span class="badge badge-frame">with frame</span></div>
@@ -805,8 +602,7 @@ function generatePrompts() {
                 <button class="copy-btn" onclick="copyText(this, 'artonly')">📋 Copy</button>
             </div>
             <div class="output-card-body" id="artonlyText">${artOnlyPrompt}</div>
-        </div>
-    `;
+        </div>`;
 }
 
 function copyText(btn, type) {
@@ -814,15 +610,158 @@ function copyText(btn, type) {
     navigator.clipboard.writeText(el.textContent).then(() => {
         btn.textContent = '✅ Copied!';
         btn.classList.add('copied');
-        setTimeout(() => {
-            btn.textContent = '📋 Copy';
-            btn.classList.remove('copied');
-        }, 2000);
+        setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000);
     });
 }
 
-// Init
 init();
+
+// ============================================================
+// IMAGE IMPORT & EXPORT
+// ============================================================
+
+let uploadedImage = null;
+
+// Drop zone setup
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) handleFile(file);
+});
+
+function handleFile(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+            uploadedImage = img;
+            document.getElementById('dropContent').style.display = 'none';
+            const preview = document.getElementById('previewContainer');
+            preview.style.display = 'flex';
+            document.getElementById('previewImage').src = e.target.result;
+            document.getElementById('imageInfo').textContent = `${img.naturalWidth} × ${img.naturalHeight} px — ${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB)`;
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function removeImage() {
+    uploadedImage = null;
+    document.getElementById('dropContent').style.display = 'block';
+    document.getElementById('previewContainer').style.display = 'none';
+    document.getElementById('previewImage').src = '';
+    fileInput.value = '';
+}
+
+function exportImages() {
+    if (!uploadedImage) {
+        showStatus('Please upload an image first.', 'error');
+        return;
+    }
+
+    const selectedSizes = [];
+    document.querySelectorAll('.size-card.selectable').forEach(card => {
+        const checkbox = card.querySelector('.size-check');
+        if (checkbox.checked) {
+            selectedSizes.push({
+                name: card.dataset.size,
+                w: parseInt(card.dataset.w),
+                h: parseInt(card.dataset.h)
+            });
+        }
+    });
+
+    if (selectedSizes.length === 0) {
+        showStatus('Please select at least one size.', 'error');
+        return;
+    }
+
+    const useJpg = document.getElementById('exportJpg').checked;
+    showStatus(`⏳ Exporting ${selectedSizes.length} sizes...`, 'processing');
+
+    // Small delay to show processing state
+    setTimeout(() => {
+        let exported = 0;
+        selectedSizes.forEach((size, index) => {
+            setTimeout(() => {
+                resizeAndDownload(uploadedImage, size.w, size.h, size.name, useJpg);
+                exported++;
+                if (exported === selectedSizes.length) {
+                    showStatus(`✅ Exported ${exported} files successfully! Check your Downloads folder.`, 'success');
+                }
+            }, index * 500); // Stagger downloads to avoid browser blocking
+        });
+    }, 300);
+}
+
+function resizeAndDownload(img, targetW, targetH, sizeName, useJpg) {
+    const canvas = document.createElement('canvas');
+    canvas.width = targetW;
+    canvas.height = targetH;
+    const ctx = canvas.getContext('2d');
+
+    // Calculate crop (center crop to match target aspect ratio)
+    const srcRatio = img.naturalWidth / img.naturalHeight;
+    const targetRatio = targetW / targetH;
+
+    let srcX = 0, srcY = 0, srcW = img.naturalWidth, srcH = img.naturalHeight;
+
+    if (srcRatio > targetRatio) {
+        // Image is wider — crop sides
+        srcW = img.naturalHeight * targetRatio;
+        srcX = (img.naturalWidth - srcW) / 2;
+    } else {
+        // Image is taller — crop top/bottom
+        srcH = img.naturalWidth / targetRatio;
+        srcY = (img.naturalHeight - srcH) / 2;
+    }
+
+    // Draw with high quality
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, srcX, srcY, srcW, srcH, 0, 0, targetW, targetH);
+
+    // Export
+    const format = useJpg ? 'image/jpeg' : 'image/png';
+    const ext = useJpg ? 'jpg' : 'png';
+    const quality = useJpg ? 0.95 : undefined;
+
+    canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `islamic-art-${sizeName}-${targetW}x${targetH}.${ext}`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }, format, quality);
+}
+
+function showStatus(message, type) {
+    const el = document.getElementById('exportStatus');
+    el.style.display = 'block';
+    el.className = `export-status ${type}`;
+    el.textContent = message;
+}
+
+// Make size cards clickable to toggle checkbox
+document.querySelectorAll('.size-card.selectable').forEach(card => {
+    card.addEventListener('click', (e) => {
+        if (e.target.type === 'checkbox') return;
+        const cb = card.querySelector('.size-check');
+        cb.checked = !cb.checked;
+    });
+});
 </script>
 </body>
 </html>
